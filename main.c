@@ -23,54 +23,57 @@ int main() {
     //Calculate total average score for all students
     float totalAverage = (student1.average + student2.average + student3.average + student4.average + student5.average) / 5.0;
 
-    //Print out the name of the student with the highest average score, by comparing each student's average score to each other
+    //Compare each student's average score to each other...
     struct Student topStudent = student1; // Initialize topStudent to the first student to begin comparison
-    if (student2.average > topStudent.average) {
-        topStudent = student2;
-    }
-    if (student3.average > topStudent.average) {
-        topStudent = student3;
-    }
-    if (student4.average > topStudent.average) {
-        topStudent = student4;
-    }
-    if (student5.average > topStudent.average) {
-        topStudent = student5;
-    }
-
+    if (student2.average > topStudent.average) topStudent = student2;
+    if (student3.average > topStudent.average) topStudent = student3;
+    if (student4.average > topStudent.average) topStudent = student4;
+    if (student5.average > topStudent.average) topStudent = student5;
+    //...To then print out the name of the student with the highest average score
     printf("%s\n", topStudent.name);
 
     //Print out each student's name that whose average is below the total average
-    if (student1.average < totalAverage) {
-        printf("%s\n", student1.name);
-    }
-    if (student2.average < totalAverage) {
-        printf("%s\n", student2.name);
-    }
-    if (student3.average < totalAverage) {
-        printf("%s\n", student3.name);
-    }
-    if (student4.average < totalAverage) {
-        printf("%s\n", student4.name);
-    }
-    if (student5.average < totalAverage) {
-        printf("%s\n", student5.name);
-    }
+    if (student1.average < totalAverage) printf("%s\n", student1.name);
+    if (student2.average < totalAverage) printf("%s\n", student2.name);
+    if (student3.average < totalAverage) printf("%s\n", student3.name);
+    if (student4.average < totalAverage) printf("%s\n", student4.name);
+    if (student5.average < totalAverage) printf("%s\n", student5.name);
     
     return 0;
 }
 
 struct Student calculateStudentInfo() {
-    //Designate array to store line of input using fgets.
-    char studArray[100];
-    fgets(studArray, sizeof(studArray), stdin);
-
     //Create a Student struct to store the info in. Initialize score sum to 0.
     struct Student studentInfo;
-    studentInfo.scoreSum = 0;
 
-    bool isName = true;
+    int pts[13]; // Array to store the 13 scores as strings (max 2 characters + null terminator)
+    scanf("%s %i %i %i %i %i %i %i %i %i %i %i %i %i", 
+        &studentInfo.name, &pts[0], &pts[1], &pts[2], &pts[3], &pts[4], &pts[5], &pts[6], &pts[7], &pts[8], &pts[9], &pts[10], &pts[11], &pts[12]);
+
+    //Turn the first letter of the name to uppercase if it is lowercase
+    if (studentInfo.name[0] >= 'a' && studentInfo.name[0] <= 'z') {
+        // Subtracts the difference between upper and lowercase on the ascii table
+        studentInfo.name[0] = studentInfo.name[0] - ('a' - 'A');
+    }
+
+    //get sum of the 13 scores
+    studentInfo.scoreSum = 0;
+    for (int i = 0; i < 13; i++) {
+        studentInfo.scoreSum += pts[i];
+    }
+
+    //Calculate average score
+    studentInfo.average = studentInfo.scoreSum / 13.00;
+    
+    return studentInfo;
+
+    //Designate array to store line of input using fgets.
+    //char studArray[100];
+    //fgets(studArray, sizeof(studArray), stdin);
+
+    /*
     for (int i = 0; i < 100; i++) { // Loops through the input until it reaches the null terminator
+        
         
         if (isName) {
             
@@ -132,11 +135,13 @@ struct Student calculateStudentInfo() {
             }
         }
 
-    }
+    //}
 
     //calculate average by dividing total score by 13, since there are 13 scores for each student
-    studentInfo.average = studentInfo.scoreSum / 13.00;
-    //printf("Average score for %s: %.2f\n", studentInfo.name, studentInfo.average); // Print the average score for the student
+    //studentInfo.average = studentInfo.scoreSum / 13.00;
+    //printf("Average score for %s: %.2f\n", studentInfo.name, studentInfo.average); // TESTING: Print the average score for the student
 
     return studentInfo;
+    
+    */
 }
